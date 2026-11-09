@@ -1,0 +1,977 @@
+name: TrajetsPlatform
+instanceOf: Core:Model
+elements:
+  - name: application
+    instanceOf: Core:Package
+    elements:
+      - name: versPlateforme
+        instanceOf: Mapping:Mapping
+        mapper: EntitiesToPlatform:platform.entitiesToPlatform
+        source: Trajets
+        target: TrajetsPlatform:application
+        mappedElements:
+          - name: trajets
+            instanceOf: Mapping:MappedElement
+            element: TrajetsPlatform:application.trajets
+            subMappedElements:
+              - name: title
+                instanceOf: Mapping:MappedElement
+                element: TrajetsPlatform:application.trajets.title
+                overriddenProperties: []
+                deleted: false
+              - name: Trajet
+                instanceOf: Mapping:MappedElement
+                element: TrajetsPlatform:application.trajets.Trajet
+                subMappedElements:
+                  - name: title
+                    instanceOf: Mapping:MappedElement
+                    element: TrajetsPlatform:application.trajets.Trajet.title
+                    overriddenProperties: []
+                    deleted: false
+                overriddenProperties: []
+                deleted: false
+                overriddenOrders: []
+              - name: route
+                instanceOf: Mapping:MappedElement
+                element: TrajetsPlatform:application.trajets.route
+                subMappedElements:
+                  - name: Trajet
+                    instanceOf: Mapping:MappedElement
+                    element: TrajetsPlatform:application.trajets.route.Trajet
+                    subMappedElements:
+                      - name: entityScreen
+                        instanceOf: Mapping:MappedElement
+                        element: >-
+                          TrajetsPlatform:application.trajets.route.Trajet.entityScreen
+                        subMappedElements:
+                          - name: title
+                            instanceOf: Mapping:MappedElement
+                            element: >-
+                              TrajetsPlatform:application.trajets.route.Trajet.entityScreen.title
+                            subMappedElements:
+                              - name: title
+                                instanceOf: Mapping:MappedElement
+                                element: >-
+                                  TrajetsPlatform:application.trajets.route.Trajet.entityScreen.title.title
+                                overriddenProperties: []
+                                deleted: false
+                            overriddenProperties: []
+                            deleted: false
+                            overriddenOrders: []
+                          - name: entity
+                            instanceOf: Mapping:MappedElement
+                            element: >-
+                              TrajetsPlatform:application.trajets.route.Trajet.entityScreen.entity
+                            subMappedElements: []
+                            overriddenProperties: []
+                            deleted: false
+                        overriddenProperties: []
+                        deleted: false
+                        overriddenOrders: []
+                    overriddenProperties: []
+                    deleted: false
+                    overriddenOrders: []
+                overriddenProperties: []
+                deleted: false
+                overriddenOrders: []
+            overriddenProperties: []
+            deleted: false
+            overriddenOrders: []
+        overriddenOrders: []
+      - name: trajets
+        instanceOf: Platform:Module
+        title:
+          name: title
+          instanceOf: Platform:I18nString
+          en: Trajets
+          fr: Trajets
+        buttons:
+          - name: Trajet
+            instanceOf: Platform:ModuleButton
+            path: /trajets/trajets
+            title:
+              name: title
+              instanceOf: Platform:I18nString
+              en: Trajet
+              fr: Trajet
+        route:
+          name: route
+          instanceOf: Platform:Route
+          path: /trajets
+          children:
+            - name: Trajet
+              instanceOf: Platform:Route
+              path: trajets
+              page:
+                name: entityScreen
+                instanceOf: Platform:component.ComponentInstance
+                component: Compositions:EntityScreen
+                values:
+                  - name: title
+                    instanceOf: Platform:component.I18nTextValue
+                    property: Compositions:EntityScreen.title
+                    value:
+                      name: title
+                      instanceOf: Platform:I18nString
+                      en: Trajets
+                      fr: Trajets
+                  - name: entity
+                    instanceOf: Platform:component.ElementValue
+                    property: Compositions:EntityScreen.entity
+                    value:
+                      - Trajets:Trajet
+  - name: code
+    instanceOf: Core:Package
+    elements:
+      - name: trajets-platform
+        instanceOf: FileSystem:SystemFolder
+        entries:
+          - name: package__json
+            instanceOf: FileSystem:TextFile
+            text: |
+              {
+                "name": "trajets",
+                "private": true,
+                "type": "module",
+                "scripts": {
+                  "dev:server": "tsx watch src/server/main.ts",
+                  "dev:client": "vite",
+                  "build": "vite build",
+                  "start": "vite build && tsx src/server/main.ts",
+                  "typecheck": "tsc --noEmit"
+                },
+                "dependencies": {
+                  "@kogitec/core": "^1.9.0",
+                  "@kogitec/schema": "^1.7.1",
+                  "@kogitec/security": "^1.5.3",
+                  "@kogitec/socket": "^1.4.3",
+                  "@kogitec/workbench": "^0.1.5",
+                  "react": "^19.2.4",
+                  "react-dom": "^19.2.4",
+                  "tsx": "^4.22.4"
+                },
+                "devDependencies": {
+                  "@types/node": "^25.5.2",
+                  "@types/react": "^19.2.14",
+                  "@types/react-dom": "^19.2.3",
+                  "@vitejs/plugin-react": "^6.0.1",
+                  "typescript": "^6.0.2",
+                  "vite": "^8.3.5"
+                }
+              }
+            fileType: json
+          - name: tsconfig__json
+            instanceOf: FileSystem:TextFile
+            text: |
+              {
+                "compilerOptions": {
+                  "target": "ESNext",
+                  "module": "ESNext",
+                  "moduleResolution": "bundler",
+                  "jsx": "react-jsx",
+                  "strict": true,
+                  "noEmit": true,
+                  "skipLibCheck": true,
+                  "isolatedModules": true,
+                  "esModuleInterop": true,
+                  "lib": ["ESNext", "DOM", "DOM.Iterable"],
+                  "types": ["node"]
+                },
+                "include": ["src"]
+              }
+            fileType: json
+          - name: vite__config__ts
+            instanceOf: FileSystem:TypeScriptFile
+            text: >
+              import react from '@vitejs/plugin-react'
+
+              import { defineConfig } from 'vite'
+
+
+              // The client on 8082 in development, the server on 8081: Vite
+              passes the
+
+              // realtime link, the sign-in and the API on to the server. `npm
+              start`
+
+              // builds into `dist/public`, which the server serves itself.
+
+              export default defineConfig({
+                plugins: [react()],
+                server: {
+                  port: 8082,
+                  proxy: {
+                    '/socket.io': { target: 'http://localhost:8081', ws: true },
+                    '/auth': 'http://localhost:8081',
+                    '/api': 'http://localhost:8081'
+                  }
+                },
+                build: { outDir: 'dist/public', emptyOutDir: true }
+              })
+          - name: index__html
+            instanceOf: FileSystem:HtmlFile
+            text: |
+              <head>
+                <title>Trajets</title>
+                <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+              </head>
+
+              <body>
+                <div id="react-target"></div>
+                <script type="module" src="/src/client/main.tsx"></script>
+              </body>
+          - name: __npmrc
+            instanceOf: FileSystem:TextFile
+            text: >
+              # The @kogitec/* packages are published on GitHub Packages:
+              reading them
+
+              # needs a GitHub token with the read:packages scope in
+              NODE_AUTH_TOKEN.
+
+              @kogitec:registry=https://npm.pkg.github.com
+
+              //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+            fileType: plaintext
+          - name: __gitignore
+            instanceOf: FileSystem:TextFile
+            text: |
+              node_modules
+              dist
+            fileType: plaintext
+          - name: Dockerfile
+            instanceOf: FileSystem:TextFile
+            text: >
+              # syntax=docker/dockerfile:1
+
+              # Generated by simple-mda: edit the model, not this file.
+
+              # NODE_AUTH_TOKEN=<token> docker build --secret
+              id=node_auth_token,env=NODE_AUTH_TOKEN -t <name> .
+
+              # The token is read by the install only: no layer of the image
+              keeps it.
+
+              FROM node:24-bookworm-slim AS build
+
+              WORKDIR /app
+
+              COPY package.json package-lock.json* .npmrc ./
+
+              RUN --mount=type=secret,id=node_auth_token,env=NODE_AUTH_TOKEN \
+                  npm install --no-audit --no-fund
+              COPY . .
+
+              RUN npm run build && npm prune --omit=dev --no-audit --no-fund
+
+
+              FROM node:24-bookworm-slim
+
+              ENV NODE_ENV=production REQUIRE_AUTH=true PORT=8081
+
+              WORKDIR /app
+
+              COPY --from=build /app/package.json /app/tsconfig.json ./
+
+              COPY --from=build /app/node_modules ./node_modules
+
+              COPY --from=build /app/src ./src
+
+              COPY --from=build /app/dist ./dist
+
+              USER node
+
+              EXPOSE 8081
+
+              CMD ["node_modules/.bin/tsx", "src/server/main.ts"]
+            fileType: dockerfile
+          - name: __dockerignore
+            instanceOf: FileSystem:TextFile
+            text: |
+              node_modules
+              dist
+              .env
+              .env.*
+              .git
+            fileType: plaintext
+          - name: README__md
+            instanceOf: FileSystem:MarkdownFile
+            text: >
+              # Trajets — on the platform
+
+
+              Generated by simple-mda from a platform application: edit the
+              model, not
+
+              these files. A single npm project on the published `@kogitec/*`
+              packages:
+
+              the server of the platform serves the application and its
+              interface.
+
+
+              ## Run
+
+
+              1. Create a GitHub token with the `read:packages` scope: the
+              `@kogitec/*`
+                 packages are published on GitHub Packages.
+              2. Put it in `NODE_AUTH_TOKEN`: `export NODE_AUTH_TOKEN=<the
+              token>`.
+
+              3. Start MongoDB 7 as a replica set:
+
+                 ```bash
+                 docker run -d --name trajets-mongo -p 27017:27017 mongo:7 --replSet rs0
+                 docker exec trajets-mongo mongosh --quiet --eval 'rs.initiate({_id:"rs0",members:[{_id:0,host:"localhost:27017"}]})'
+                 ```
+
+              4. `npm install`.
+
+              5. `npm start` — builds the interface, then starts the server.
+
+              6. Open `http://localhost:8081`.
+
+
+              `MONGO_URL` names the database (by default
+              `mongodb://localhost:27017/kogitec`),
+
+              `PORT` the port. Without MongoDB the server starts, says so once,
+              and the
+
+              lists of the entities without a table stay empty. Under `npm
+              start` the
+
+              sign-in is not required: without a sign-in provider (`OAUTH_*`)
+              the
+
+              application opens as « Développeur local ». `npm run typecheck`
+              checks the
+
+              types. « Configure the server » names every variable the server
+              reads.
+
+
+              ## An existing PostgreSQL base
+
+
+              These entities live in a table of an existing PostgreSQL base. The
+              server
+
+              reads and writes their rows; it never creates, alters or drops a
+              table or
+
+              a column.
+
+
+              - `Trajet`: the table `kitchen_trips`
+
+
+              Point the server at the base before `npm start`:
+
+
+              | Variable | What it says | Default |
+
+              | --- | --- | --- |
+
+              | `POSTGRES_URL` | The base:
+              `postgres://user:password@localhost:5432/base` | none: each read
+              of these entities is refused |
+
+              | `POSTGRES_PUBLICATION` | The publication the server follows |
+              `platform` |
+
+
+              ```bash
+
+              POSTGRES_URL=postgres://user:password@localhost:5432/base npm
+              start
+
+              ```
+
+
+              At start-up the server says once whether the base answers:
+
+
+              ```text
+
+              [schema] PostgreSQL answers at
+              postgres://user:***@localhost:5432/base: connected
+
+              ```
+
+
+              The account of the base reads and writes these tables (`SELECT`,
+              `INSERT`,
+
+              `UPDATE`, `DELETE`) and uses their sequences. The writes of the
+
+              application are always seen live; to see live what other
+              applications
+
+              write, the base needs `wal_level = logical`, the account the
+              `REPLICATION`
+
+              right, and a publication of these tables. « Set the base for live
+              changes —
+
+              once » of the guide of the platform says how, once:
+
+              https://github.com/Kogitec/platform/blob/develop/docs/platform/schema/postgres.md.
+
+              Without them the server says so once and goes on.
+
+
+              MongoDB keeps only the entities without a table. Without it, the
+              server
+
+              starts, says so once, and serves these tables all the same.
+
+
+              ## Build the image
+
+
+              The `Dockerfile` builds the project into an image that builds its
+              interface
+
+              and serves it from the start. The token is passed as a build
+              secret, read by
+
+              the install only: no layer of the image keeps it. From this
+              folder:
+
+
+              ```bash
+
+              NODE_AUTH_TOKEN=<the token> docker build --secret
+              id=node_auth_token,env=NODE_AUTH_TOKEN -t trajets .
+
+              ```
+
+
+              The build needs BuildKit, the default of Docker since version 23.
+              The
+
+              versions of the packages are those of `package-lock.json` when
+              there is one,
+
+              else the latest the ranges of `package.json` allow.
+
+
+              The image requires the sign-in (`REQUIRE_AUTH=true`). Started
+              without a
+
+              sign-in provider, it does not start, and its log names what is
+              missing:
+
+
+              ```text
+
+              server not started: REQUIRE_AUTH=true needs an identity provider:
+              set OAUTH_ISSUER, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET
+
+              ```
+
+
+              To try it on a computer, `REQUIRE_AUTH=false` opens the session of
+
+              « Développeur local », and the MongoDB of « Run » is reached
+              through the host:
+
+
+              ```bash
+
+              docker run --rm -p 8081:8081 -e REQUIRE_AUTH=false \
+                --add-host=host.docker.internal:host-gateway \
+                -e 'MONGO_URL=mongodb://host.docker.internal:27017/kogitec?directConnection=true' \
+                trajets
+              ```
+
+
+              Then open `http://localhost:8081`. Keep `directConnection=true`:
+              without it,
+
+              the driver follows the replica set to `localhost:27017`, which
+              inside the
+
+              container is the container itself, and the lists stay empty.
+
+
+              ## Configure the server
+
+
+              The server reads its settings from the environment only.
+
+
+              | Variable | What it says | Without it |
+
+              | --- | --- | --- |
+
+              | `PORT` | The port of the server | `8081` |
+
+              | `MONGO_URL` | The MongoDB base of the entities without a table |
+              `mongodb://localhost:27017/kogitec`, which inside a container is
+              the container itself: the server says once that MongoDB does not
+              answer, the lists of these entities stay empty, and it connects by
+              itself when MongoDB answers |
+
+              | `POSTGRES_URL` | The PostgreSQL base of the entities that name a
+              table | Each read of such an entity is refused, and the log says
+              so at each read: `[schema] Schema <Entity> refused: POSTGRES_URL
+              is not set`. A project without such an entity does not need it |
+
+              | `POSTGRES_PUBLICATION` | The publication the server follows to
+              see live what other applications write | `platform` |
+
+              | `REQUIRE_AUTH` | `true` requires a session for every page and
+              every live exchange | `true` in the image. Under `npm start` the
+              sign-in is not required: every visitor gets the session of «
+              Développeur local », which reads and writes everything |
+
+              | `OAUTH_ISSUER`, `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET` | The
+              sign-in provider and the client registered with it | Under
+              `REQUIRE_AUTH=true` the server does not start and names the
+              missing ones: `server not started: REQUIRE_AUTH=true needs an
+              identity provider: set OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET` |
+
+              | `ROOT_URL` | The public address of the server, where the sign-in
+              comes back | The log says `REQUIRE_AUTH is set without ROOT_URL;
+              socket.io connections are checked for a session only, not for the
+              page that opens them.` The sign-in comes back to
+              `http://localhost:<PORT>/auth/callback`, and the live exchanges
+              are accepted from any page |
+
+              | `SESSION_SECRET` | The key of the session cookies | A key drawn
+              at start-up, and the log says so at the first sign-in:
+              `SESSION_SECRET is not set; generating an ephemeral key.` Every
+              restart signs everybody out |
+
+              | `PLATFORM_ROLES` | The roles, in JSON, from each role to the
+              email addresses or the client ids that hold it:
+              `{"admin":["someone@example.com"]}` | Every person has the base
+              role `user` only. A value that is not JSON stops the server:
+              `server not started: PLATFORM_ROLES is not JSON: …` |
+
+              | `SCHEMA_ACCESS_DEFAULT` | `open` opens to everyone an entity
+              that declares no right | Under `REQUIRE_AUTH=true` such an entity
+              is refused to everyone, and the log names it at start-up:
+              `[schema] no right declared, refused to every caller: <Entity>, …`
+              |
+
+              | `MACHINE_CLIENT_IDS` | The machine clients, separated by commas,
+              allowed in the live exchanges with a token | None: a live exchange
+              that brings a token is refused without asking the sign-in provider
+              |
+
+              | `TRUST_PROXY` | The proxies trusted in front of the server:
+              `true`, `false`, a number of hops or a list of addresses | The
+              nearest one (`1`): behind a proxy that says `X-Forwarded-Proto:
+              https`, the cookies are `Secure` |
+
+              | `NODE_ENV` | `production` in the image: the server does not
+              report the missing translation keys | Under `npm start` it reports
+              them |
+
+
+              ## `npm install` without a token
+
+
+              ```
+
+              npm error code E401
+
+              npm error 401 Unauthorized - GET
+              https://npm.pkg.github.com/@kogitec%2fcore - unauthenticated: User
+              cannot be authenticated with the token provided.
+
+              ```
+
+
+              `NODE_AUTH_TOKEN` is empty or has no `read:packages` scope: GitHub
+              Packages
+
+              refuses to read the first `@kogitec/*` package. Steps 1 and 2 fix
+              it. The
+
+              build of the image stops on the same `npm error code E401`;
+              without any
+
+              token its second line ends with `authentication token not
+              provided`.
+          - name: src
+            instanceOf: FileSystem:Folder
+            entries:
+              - name: client
+                instanceOf: FileSystem:Folder
+                entries:
+                  - name: main__tsx
+                    instanceOf: FileSystem:TypeScriptFile
+                    text: >
+                      import { AuthGate } from '@kogitec/security/client'
+
+                      import { Application, createI18n } from
+                      '@kogitec/workbench/client'
+
+                      import { createRoot } from 'react-dom/client'
+
+                      import { resources } from '../common/i18n'
+
+                      import { TrajetsModule } from './TrajetsModule'
+
+
+                      // The platform's texts, then the application's own.
+
+                      const i18n = createI18n(resources)
+
+
+                      createRoot(document.getElementById('react-target')!).render(
+                        <AuthGate>
+                          <Application
+                            name='Trajets'
+                            logo=''
+                            i18n={i18n}
+                            modules={[TrajetsModule]}
+                          />
+                        </AuthGate>
+                      )
+                  - name: TrajetsModule__tsx
+                    instanceOf: FileSystem:TypeScriptFile
+                    text: >
+                      // The module trajets of the application: its buttons and
+                      its routes.
+
+                      // Generated from the model: change the model, not this
+                      file.
+
+                      import type { ModuleProps } from '@kogitec/core/client'
+
+                      import { Trajet } from '../common/entities'
+
+                      import { EntityScreen } from './EntityScreen'
+
+
+                      export const TrajetsModule: ModuleProps = {
+                        name: 'trajets',
+                        title: 'trajets:trajets.title',
+                        buttons: [
+                          { title: 'trajets:trajets.Trajet.title', path: '/trajets/trajets' }
+                        ],
+                        route: {
+                          path: 'trajets',
+                          children: [
+                            {
+                              path: 'trajets',
+                              children: [
+                                {
+                                  index: true,
+                                  element: (
+                                    <EntityScreen title='trajets:trajets.route.Trajet.entityScreen.title' entity={Trajet} />
+                                  )
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                  - name: EntityScreen__tsx
+                    instanceOf: FileSystem:TypeScriptFile
+                    text: >
+                      // The composition EntityScreen: its properties are the
+                      props.
+
+                      // Generated from the model: change the model, not this
+                      file.
+
+                      import { Column, Page, Row } from '@kogitec/core/client'
+
+                      import type { TranslationText } from
+                      '@kogitec/core/common'
+
+                      import { DocForm, DocList, DocScope } from
+                      '@kogitec/schema/client'
+
+                      import type { FieldShape, Schema } from
+                      '@kogitec/schema/common'
+
+
+                      export type EntityScreenProps<EntityShape extends
+                      FieldShape> = {
+                        title: TranslationText
+                        entity: Schema<EntityShape>
+                      }
+
+
+                      export const EntityScreen = <EntityShape extends
+                      FieldShape>({ title, entity }:
+                      EntityScreenProps<EntityShape>) => (
+                        <Page title={title}>
+                          <DocScope schema={entity}>
+                            <Column>
+                              <Row>
+                                <DocList />
+                                <DocForm />
+                              </Row>
+                            </Column>
+                          </DocScope>
+                        </Page>
+                      )
+              - name: common
+                instanceOf: FileSystem:Folder
+                entries:
+                  - name: entities__ts
+                    instanceOf: FileSystem:TypeScriptFile
+                    text: >
+                      // The entities of the application: one schema per
+                      modelled entity.
+
+                      // Generated from the model: change the model, not this
+                      file.
+
+                      import {
+                        dateTime,
+                        decimal,
+                        docSchema,
+                        json,
+                        localDate,
+                        long,
+                        optional,
+                        string,
+                        time,
+                        type Infer
+                      } from '@kogitec/schema/common'
+
+
+                      export const Trajet = docSchema({
+                        name: 'Trajet',
+                        fields: {
+                          conducteur: string(),
+                          places: long(),
+                          prix: decimal({ scale: 2 }),
+                          dateDepart: localDate(),
+                          heureDepart: time(),
+                          reserveLe: optional(dateTime()),
+                          notes: optional(string()),
+                          options: optional(json())
+                        },
+                        meta: {
+                          namespace: 'trajets',
+                          name: 'Trajet',
+                          skipTranslation: true,
+                          access: { read: ['user'], update: ['user'] },
+                          storage: 'postgres',
+                          sql: {
+                            table: 'kitchen_trips',
+                            columns: {
+                              conducteur: 'driver_name',
+                              places: 'seats',
+                              prix: 'price',
+                              dateDepart: 'departure_date',
+                              heureDepart: 'departure_time',
+                              reserveLe: 'booked_at'
+                            }
+                          }
+                        }
+                      })
+
+                      export type Trajet = Infer<typeof Trajet>
+                  - name: i18n__ts
+                    instanceOf: FileSystem:TypeScriptFile
+                    text: >
+                      // The texts of the application, in the `trajets`
+                      namespace.
+
+                      // Generated from the model: change the model, not this
+                      file.
+
+                      export const resources = {
+                        fr: {
+                          trajets: {
+                            trajets: {
+                              title: 'Trajets',
+                              Trajet: {
+                                title: 'Trajet'
+                              },
+                              route: {
+                                Trajet: {
+                                  entityScreen: {
+                                    title: 'Trajets'
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        en: {
+                          trajets: {
+                            trajets: {
+                              title: 'Trajets',
+                              Trajet: {
+                                title: 'Trajet'
+                              },
+                              route: {
+                                Trajet: {
+                                  entityScreen: {
+                                    title: 'Trajets'
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+              - name: server
+                instanceOf: FileSystem:Folder
+                entries:
+                  - name: main__ts
+                    instanceOf: FileSystem:TypeScriptFile
+                    text: >
+                      import { createServer, Logger } from
+                      '@kogitec/core/server'
+
+                      import { securityServerModule } from
+                      '@kogitec/security/server'
+
+                      // Declaring the schemas registers them: the platform
+                      serves the documents
+
+                      // of each one, which the lists and the forms read and
+                      write.
+
+                      import '../common/entities'
+
+
+                      // `security` brings `socket` and `schema` with it.
+                      Listens on PORT, else
+
+                      // 8081; MongoDB and the sign-in are optional in
+                      development.
+
+                      createServer({ modules: [securityServerModule]
+                      }).catch((error: unknown) => {
+                        const message = error instanceof Error ? error.message : String(error)
+                        Logger.error(`server not started: ${message}`)
+                        process.exit(1)
+                      })
+        rootPath: trajets-platform
+      - name: versCode
+        instanceOf: Mapping:Mapping
+        mapper: PlatformToCode:platform.platformToCode
+        source: TrajetsPlatform:application
+        target: TrajetsPlatform:code.trajets-platform
+        mappedElements:
+          - name: package__json
+            instanceOf: Mapping:MappedElement
+            element: TrajetsPlatform:code.trajets-platform.package__json
+            overriddenProperties: []
+            deleted: false
+          - name: tsconfig__json
+            instanceOf: Mapping:MappedElement
+            element: TrajetsPlatform:code.trajets-platform.tsconfig__json
+            overriddenProperties: []
+            deleted: false
+          - name: vite__config__ts
+            instanceOf: Mapping:MappedElement
+            element: TrajetsPlatform:code.trajets-platform.vite__config__ts
+            overriddenProperties: []
+            deleted: false
+          - name: index__html
+            instanceOf: Mapping:MappedElement
+            element: TrajetsPlatform:code.trajets-platform.index__html
+            overriddenProperties: []
+            deleted: false
+          - name: __npmrc
+            instanceOf: Mapping:MappedElement
+            element: TrajetsPlatform:code.trajets-platform.__npmrc
+            overriddenProperties: []
+            deleted: false
+          - name: __gitignore
+            instanceOf: Mapping:MappedElement
+            element: TrajetsPlatform:code.trajets-platform.__gitignore
+            overriddenProperties: []
+            deleted: false
+          - name: README__md
+            instanceOf: Mapping:MappedElement
+            element: TrajetsPlatform:code.trajets-platform.README__md
+            overriddenProperties: []
+            deleted: false
+          - name: src
+            instanceOf: Mapping:MappedElement
+            element: TrajetsPlatform:code.trajets-platform.src
+            subMappedElements:
+              - name: client
+                instanceOf: Mapping:MappedElement
+                element: TrajetsPlatform:code.trajets-platform.src.client
+                subMappedElements:
+                  - name: main__tsx
+                    instanceOf: Mapping:MappedElement
+                    element: TrajetsPlatform:code.trajets-platform.src.client.main__tsx
+                    overriddenProperties: []
+                    deleted: false
+                  - name: TrajetsModule__tsx
+                    instanceOf: Mapping:MappedElement
+                    element: >-
+                      TrajetsPlatform:code.trajets-platform.src.client.TrajetsModule__tsx
+                    overriddenProperties: []
+                    deleted: false
+                  - name: EntityScreen__tsx
+                    instanceOf: Mapping:MappedElement
+                    element: >-
+                      TrajetsPlatform:code.trajets-platform.src.client.EntityScreen__tsx
+                    overriddenProperties: []
+                    deleted: false
+                overriddenProperties: []
+                deleted: false
+                overriddenOrders: []
+              - name: common
+                instanceOf: Mapping:MappedElement
+                element: TrajetsPlatform:code.trajets-platform.src.common
+                subMappedElements:
+                  - name: entities__ts
+                    instanceOf: Mapping:MappedElement
+                    element: >-
+                      TrajetsPlatform:code.trajets-platform.src.common.entities__ts
+                    overriddenProperties: []
+                    deleted: false
+                  - name: i18n__ts
+                    instanceOf: Mapping:MappedElement
+                    element: TrajetsPlatform:code.trajets-platform.src.common.i18n__ts
+                    overriddenProperties: []
+                    deleted: false
+                overriddenProperties: []
+                deleted: false
+                overriddenOrders: []
+              - name: server
+                instanceOf: Mapping:MappedElement
+                element: TrajetsPlatform:code.trajets-platform.src.server
+                subMappedElements:
+                  - name: main__ts
+                    instanceOf: Mapping:MappedElement
+                    element: TrajetsPlatform:code.trajets-platform.src.server.main__ts
+                    overriddenProperties: []
+                    deleted: false
+                overriddenProperties: []
+                deleted: false
+                overriddenOrders: []
+            overriddenProperties: []
+            deleted: false
+            overriddenOrders: []
+          - name: Dockerfile
+            instanceOf: Mapping:MappedElement
+            element: TrajetsPlatform:code.trajets-platform.Dockerfile
+            overriddenProperties: []
+            deleted: false
+          - name: __dockerignore
+            instanceOf: Mapping:MappedElement
+            element: TrajetsPlatform:code.trajets-platform.__dockerignore
+            overriddenProperties: []
+            deleted: false
+        overriddenOrders: []
+version: latest
+depends:
+  - Mapping
+  - Trajets
+  - Platform
+  - FileSystem
+  - metaltura/platform/EntitiesToPlatform@v1.0.0
+  - metaltura/platform/Compositions@v1.0.0
+  - metaltura/platform/PlatformToCode@v1.0.0

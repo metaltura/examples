@@ -1,0 +1,128 @@
+name: BoutiqueDomain
+instanceOf: Core:Model
+elements:
+  - name: entities
+    instanceOf: Core:Package
+    elements:
+      - name: Document
+        instanceOf: Domain:Entity
+        fields:
+          - name: numero
+            instanceOf: Domain:Field
+            mandatory: true
+            type: Core:String
+      - name: Client
+        instanceOf: Domain:Entity
+        fields:
+          - name: nom
+            instanceOf: Domain:Field
+            mandatory: true
+            type: Core:String
+          - name: courriels
+            instanceOf: Domain:Field
+            multiple: true
+            type: Core:String
+        relations:
+          - name: commandes
+            instanceOf: Domain:EntityRelation
+            multiple: true
+            type: BoutiqueDomain:entities.Commande
+            opposite: BoutiqueDomain:entities.Commande.client
+        invariants:
+          - name: nomRempli
+            instanceOf: Domain:Invariant
+            message: Le nom du client est obligatoire.
+            check: |
+              export default function(entity: any): boolean {
+                return typeof entity.nom === 'string' && entity.nom.length > 0
+              }
+        lifecycle:
+          name: vie
+          instanceOf: Domain:Lifecycle
+          states:
+            - name: actif
+              instanceOf: Domain:State
+            - name: ferme
+              instanceOf: Domain:State
+          transitions:
+            - name: fermer
+              instanceOf: Domain:Transition
+              source: BoutiqueDomain:entities.Client.vie.actif
+              target: BoutiqueDomain:entities.Client.vie.ferme
+              guard: |
+                export default function(entity: any): boolean {
+                  return !entity.commandes || entity.commandes.length === 0
+                }
+          initialState: BoutiqueDomain:entities.Client.vie.actif
+      - name: Commande
+        instanceOf: Domain:Entity
+        extends: BoutiqueDomain:entities.Document
+        fields:
+          - name: total
+            instanceOf: Domain:Field
+            type: Core:Number
+          - name: date
+            instanceOf: Domain:Field
+            mandatory: true
+            type: Core:Date
+        relations:
+          - name: client
+            instanceOf: Domain:EntityRelation
+            mandatory: true
+            type: BoutiqueDomain:entities.Client
+          - name: lignes
+            instanceOf: Domain:EntityRelation
+            multiple: true
+            type: BoutiqueDomain:entities.LigneDeCommande
+            composite: true
+      - name: LigneDeCommande
+        instanceOf: Domain:Entity
+        fields:
+          - name: quantite
+            instanceOf: Domain:Field
+            mandatory: true
+            type: Core:Number
+  - name: services
+    instanceOf: Core:Package
+    elements:
+      - name: Facturation
+        instanceOf: Domain:Service
+        operations:
+          - name: calculerTotal
+            instanceOf: Domain:Operation
+            input:
+              - name: commande
+                instanceOf: Core:InputFeature
+                mandatory: true
+                type: BoutiqueDomain:entities.Commande
+            output:
+              name: total
+              instanceOf: Core:OutputFeature
+              mandatory: true
+              type: Core:Number
+            code: |
+              export default function run(commande): number {
+                return commande.total ?? 0
+              }
+  - name: processes
+    instanceOf: Core:Package
+    elements:
+      - name: Commander
+        instanceOf: Domain:Process
+        steps:
+          - name: verifier
+            instanceOf: Domain:Step
+            service: BoutiqueDomain:services.Facturation
+            operation: BoutiqueDomain:services.Facturation.calculerTotal
+            branches:
+              - name: suite
+                instanceOf: Domain:Branch
+                target: BoutiqueDomain:processes.Commander.facturer
+          - name: facturer
+            instanceOf: Domain:Step
+            service: BoutiqueDomain:services.Facturation
+            operation: BoutiqueDomain:services.Facturation.calculerTotal
+        startStep: BoutiqueDomain:processes.Commander.verifier
+version: latest
+depends:
+  - metaltura/domain/Domain@v1.0.0

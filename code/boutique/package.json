@@ -1,0 +1,14 @@
+{
+  "name": "boutique",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["server", "client"],
+  "scripts": {
+    "start": "concurrently -n server,client \"npm run start -w server\" \"npm run start -w client\"",
+    "build": "npm run build -ws --if-present",
+    "typecheck": "npm run typecheck -ws --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "9.2.5"
+  }
+}

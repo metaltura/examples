@@ -1,0 +1,36 @@
+import { Routes } from '@angular/router'
+import { DocumentListPageComponent } from './pages/document-list-page.component'
+import { DocumentNewPageComponent } from './pages/document-new-page.component'
+import { ClientListPageComponent } from './pages/client-list-page.component'
+import { ClientNewPageComponent } from './pages/client-new-page.component'
+import { CommandeListPageComponent } from './pages/commande-list-page.component'
+import { CommandeNewPageComponent } from './pages/commande-new-page.component'
+import { LigneDeCommandeListPageComponent } from './pages/ligne-de-commande-list-page.component'
+import { LigneDeCommandeNewPageComponent } from './pages/ligne-de-commande-new-page.component'
+import { DocumentDetailPageComponent } from './pages/document-detail-page.component'
+import { DocumentEditPageComponent } from './pages/document-edit-page.component'
+import { ClientDetailPageComponent } from './pages/client-detail-page.component'
+import { ClientEditPageComponent } from './pages/client-edit-page.component'
+import { CommandeDetailPageComponent } from './pages/commande-detail-page.component'
+import { CommandeEditPageComponent } from './pages/commande-edit-page.component'
+import { LigneDeCommandeDetailPageComponent } from './pages/ligne-de-commande-detail-page.component'
+import { LigneDeCommandeEditPageComponent } from './pages/ligne-de-commande-edit-page.component'
+
+export const routes: Routes = [
+  { path: 'documents', component: DocumentListPageComponent },
+  { path: 'documents/new', component: DocumentNewPageComponent },
+  { path: 'clients', component: ClientListPageComponent },
+  { path: 'clients/new', component: ClientNewPageComponent },
+  { path: 'commandes', component: CommandeListPageComponent },
+  { path: 'commandes/new', component: CommandeNewPageComponent },
+  { path: 'lignedecommandes', component: LigneDeCommandeListPageComponent },
+  { path: 'lignedecommandes/new', component: LigneDeCommandeNewPageComponent },
+  { path: 'documents/:id', component: DocumentDetailPageComponent },
+  { path: 'documents/:id/edit', component: DocumentEditPageComponent },
+  { path: 'clients/:id', component: ClientDetailPageComponent },
+  { path: 'clients/:id/edit', component: ClientEditPageComponent },
+  { path: 'commandes/:id', component: CommandeDetailPageComponent },
+  { path: 'commandes/:id/edit', component: CommandeEditPageComponent },
+  { path: 'lignedecommandes/:id', component: LigneDeCommandeDetailPageComponent },
+  { path: 'lignedecommandes/:id/edit', component: LigneDeCommandeEditPageComponent }
+]

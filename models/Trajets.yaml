@@ -1,0 +1,52 @@
+name: Trajets
+instanceOf: Core:Model
+elements:
+  - name: Trajet
+    instanceOf: Platform:Entity
+    extends: Platform:Doc
+    fields:
+      - name: conducteur
+        instanceOf: Platform:Field
+        mandatory: true
+        type: Core:String
+        column: driver_name
+      - name: places
+        instanceOf: Platform:Field
+        mandatory: true
+        type: Platform:Long
+        column: seats
+      - name: prix
+        instanceOf: Platform:Field
+        mandatory: true
+        type: Platform:Decimal
+        column: price
+        scale: 2
+      - name: dateDepart
+        instanceOf: Platform:Field
+        mandatory: true
+        type: Platform:LocalDate
+        column: departure_date
+      - name: heureDepart
+        instanceOf: Platform:Field
+        mandatory: true
+        type: Platform:Time
+        column: departure_time
+      - name: reserveLe
+        instanceOf: Platform:Field
+        type: Platform:DateTime
+        column: booked_at
+      - name: notes
+        instanceOf: Platform:Field
+        type: Core:String
+      - name: options
+        instanceOf: Platform:Field
+        type: Platform:Json
+    relations: []
+    readRoles:
+      - user
+    updateRoles:
+      - user
+    table: kitchen_trips
+version: latest
+depends:
+  - Platform

@@ -1,0 +1,30 @@
+{
+  "name": "trajets",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:server": "tsx watch src/server/main.ts",
+    "dev:client": "vite",
+    "build": "vite build",
+    "start": "vite build && tsx src/server/main.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@kogitec/core": "^1.9.0",
+    "@kogitec/schema": "^1.7.1",
+    "@kogitec/security": "^1.5.3",
+    "@kogitec/socket": "^1.4.3",
+    "@kogitec/workbench": "^0.1.5",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tsx": "^4.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "^6.0.2",
+    "vite": "^8.3.5"
+  }
+}

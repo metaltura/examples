@@ -1,0 +1,39 @@
+name: Bibliotheque
+instanceOf: Core:Model
+elements:
+  - name: Auteur
+    instanceOf: Platform:Entity
+    extends: Platform:Doc
+    fields:
+      - name: nom
+        instanceOf: Platform:Field
+        mandatory: true
+        type: Core:String
+    relations: []
+  - name: Livre
+    instanceOf: Platform:Entity
+    extends: Platform:Doc
+    fields:
+      - name: titre
+        instanceOf: Platform:Field
+        mandatory: true
+        type: Core:String
+    relations:
+      - name: auteur
+        instanceOf: Platform:EntityRelation
+        type: Bibliotheque:Auteur
+  - name: Lecteur
+    instanceOf: Platform:Entity
+    extends: Platform:Doc
+    fields:
+      - name: nom
+        instanceOf: Platform:Field
+        mandatory: true
+        type: Core:String
+      - name: courriel
+        instanceOf: Platform:Field
+        type: Core:String
+    relations: []
+version: latest
+depends:
+  - Platform

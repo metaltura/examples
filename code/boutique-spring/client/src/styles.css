@@ -1,0 +1,226 @@
+:root {
+  --primary: #1565c0;
+  --danger: #c62828;
+  --text: #1f2933;
+  --muted: #5f6b7a;
+  --border: #dde1e6;
+  --background: #f4f6f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--background);
+}
+
+a {
+  color: var(--primary);
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  color: #fff;
+  background: #37474f;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+}
+
+nav strong {
+  margin-right: 1.5rem;
+  font-size: 1.25rem;
+}
+
+nav a {
+  padding: 0.375rem 0.75rem;
+  border-radius: 4px;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+nav a:hover {
+  background: rgb(255 255 255 / 12%);
+  opacity: 1;
+}
+
+nav a.active {
+  font-weight: 600;
+  background: rgb(255 255 255 / 20%);
+  opacity: 1;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+section {
+  padding: 1.5rem 2rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+}
+
+h1 {
+  margin: 0 0 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+table {
+  width: 100%;
+  margin-top: 1.25rem;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+th {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: #f8f9fb;
+}
+
+tbody tr:hover {
+  background: #f1f5fb;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.625rem 2rem;
+  margin: 0 0 1.5rem;
+}
+
+dt {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+dd {
+  margin: 0;
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+  max-width: 32rem;
+}
+
+form label {
+  display: grid;
+  gap: 0.25rem;
+  font-weight: 600;
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid #c3cad3;
+  border-radius: 4px;
+  font: inherit;
+  font-weight: normal;
+  background: #fff;
+}
+
+form input[type="checkbox"] {
+  justify-self: start;
+  width: auto;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  border-color: var(--primary);
+  outline: 2px solid var(--primary);
+  outline-offset: -1px;
+}
+
+button,
+section > a,
+section > p > a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button,
+section > a {
+  color: #fff;
+  background: var(--primary);
+}
+
+button:hover,
+section > a:hover {
+  filter: brightness(0.9);
+}
+
+form button {
+  justify-self: start;
+}
+
+section > p:not(.error) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+section > p > a {
+  color: var(--primary);
+  background: transparent;
+}
+
+section > p > a:hover {
+  background: #e8f0fb;
+}
+
+section > p > button {
+  margin-left: auto;
+  border-color: var(--danger);
+  color: var(--danger);
+  background: transparent;
+}
+
+section > p > button:hover {
+  filter: none;
+  background: #fdecea;
+}
+
+.error {
+  padding: 0.75rem 1rem;
+  border: 1px solid #f5c2c0;
+  border-radius: 4px;
+  color: var(--danger);
+  background: #fdecea;
+}
