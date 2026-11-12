@@ -2069,16 +2069,19 @@ elements:
                                                                 name: expression
                                                                 instanceOf: Platform:Expression
                                                                 compute: >
-                                                                  export default (scope) => { const v:
-                                                                  unknown = scope.trajet?.places; return v
-                                                                  === undefined || v === null ? '' :
-                                                                  typeof v === 'number' ?
-                                                                  v.toLocaleString() : typeof v ===
-                                                                  'boolean' ? (v ? '✓' : '') : v
-                                                                  instanceof Date ? new
+                                                                  export default (scope) => { const member
+                                                                  = (m: unknown): string => typeof m ===
+                                                                  'string' ? m : typeof m === 'number' ?
+                                                                  m.toLocaleString() : typeof m ===
+                                                                  'boolean' ? String(m) : m instanceof
+                                                                  Date ? new
                                                                   Intl.DateTimeFormat(undefined, {
-                                                                  dateStyle: 'medium' }).format(v) :
-                                                                  String(v) }
+                                                                  dateStyle: 'medium' }).format(m) : '';
+                                                                  const v: unknown = scope.trajet?.places;
+                                                                  return typeof v === 'boolean' ? (v ? '✓'
+                                                                  : '') : Array.isArray(v) ?
+                                                                  v.map(member).filter((t) => t !==
+                                                                  '').join(', ') : member(v) }
                                                         - name: titrePrix
                                                           instanceOf: Platform:component.ComponentInstance
                                                           component: PlatformComponents:infos.Text
@@ -2102,16 +2105,19 @@ elements:
                                                                 name: expression
                                                                 instanceOf: Platform:Expression
                                                                 compute: >
-                                                                  export default (scope) => { const v:
-                                                                  unknown = scope.trajet?.prix; return v
-                                                                  === undefined || v === null ? '' :
-                                                                  typeof v === 'number' ?
-                                                                  v.toLocaleString() : typeof v ===
-                                                                  'boolean' ? (v ? '✓' : '') : v
-                                                                  instanceof Date ? new
+                                                                  export default (scope) => { const member
+                                                                  = (m: unknown): string => typeof m ===
+                                                                  'string' ? m : typeof m === 'number' ?
+                                                                  m.toLocaleString() : typeof m ===
+                                                                  'boolean' ? String(m) : m instanceof
+                                                                  Date ? new
                                                                   Intl.DateTimeFormat(undefined, {
-                                                                  dateStyle: 'medium' }).format(v) :
-                                                                  String(v) }
+                                                                  dateStyle: 'medium' }).format(m) : '';
+                                                                  const v: unknown = scope.trajet?.prix;
+                                                                  return typeof v === 'boolean' ? (v ? '✓'
+                                                                  : '') : Array.isArray(v) ?
+                                                                  v.map(member).filter((t) => t !==
+                                                                  '').join(', ') : member(v) }
                                                         - name: titreDateDepart
                                                           instanceOf: Platform:component.ComponentInstance
                                                           component: PlatformComponents:infos.Text
@@ -2135,16 +2141,20 @@ elements:
                                                                 name: expression
                                                                 instanceOf: Platform:Expression
                                                                 compute: >
-                                                                  export default (scope) => { const v:
-                                                                  unknown = scope.trajet?.dateDepart;
-                                                                  return v === undefined || v === null ?
-                                                                  '' : typeof v === 'number' ?
-                                                                  v.toLocaleString() : typeof v ===
-                                                                  'boolean' ? (v ? '✓' : '') : v
-                                                                  instanceof Date ? new
+                                                                  export default (scope) => { const member
+                                                                  = (m: unknown): string => typeof m ===
+                                                                  'string' ? m : typeof m === 'number' ?
+                                                                  m.toLocaleString() : typeof m ===
+                                                                  'boolean' ? String(m) : m instanceof
+                                                                  Date ? new
                                                                   Intl.DateTimeFormat(undefined, {
-                                                                  dateStyle: 'medium' }).format(v) :
-                                                                  String(v) }
+                                                                  dateStyle: 'medium' }).format(m) : '';
+                                                                  const v: unknown =
+                                                                  scope.trajet?.dateDepart; return typeof
+                                                                  v === 'boolean' ? (v ? '✓' : '') :
+                                                                  Array.isArray(v) ?
+                                                                  v.map(member).filter((t) => t !==
+                                                                  '').join(', ') : member(v) }
                                                         - name: titreHeureDepart
                                                           instanceOf: Platform:component.ComponentInstance
                                                           component: PlatformComponents:infos.Text
@@ -2168,16 +2178,20 @@ elements:
                                                                 name: expression
                                                                 instanceOf: Platform:Expression
                                                                 compute: >
-                                                                  export default (scope) => { const v:
-                                                                  unknown = scope.trajet?.heureDepart;
-                                                                  return v === undefined || v === null ?
-                                                                  '' : typeof v === 'number' ?
-                                                                  v.toLocaleString() : typeof v ===
-                                                                  'boolean' ? (v ? '✓' : '') : v
-                                                                  instanceof Date ? new
+                                                                  export default (scope) => { const member
+                                                                  = (m: unknown): string => typeof m ===
+                                                                  'string' ? m : typeof m === 'number' ?
+                                                                  m.toLocaleString() : typeof m ===
+                                                                  'boolean' ? String(m) : m instanceof
+                                                                  Date ? new
                                                                   Intl.DateTimeFormat(undefined, {
-                                                                  dateStyle: 'medium' }).format(v) :
-                                                                  String(v) }
+                                                                  dateStyle: 'medium' }).format(m) : '';
+                                                                  const v: unknown =
+                                                                  scope.trajet?.heureDepart; return typeof
+                                                                  v === 'boolean' ? (v ? '✓' : '') :
+                                                                  Array.isArray(v) ?
+                                                                  v.map(member).filter((t) => t !==
+                                                                  '').join(', ') : member(v) }
                                                         - name: titreReserveLe
                                                           instanceOf: Platform:component.ComponentInstance
                                                           component: PlatformComponents:infos.Text
@@ -2201,16 +2215,20 @@ elements:
                                                                 name: expression
                                                                 instanceOf: Platform:Expression
                                                                 compute: >
-                                                                  export default (scope) => { const v:
-                                                                  unknown = scope.trajet?.reserveLe;
-                                                                  return v === undefined || v === null ?
-                                                                  '' : typeof v === 'number' ?
-                                                                  v.toLocaleString() : typeof v ===
-                                                                  'boolean' ? (v ? '✓' : '') : v
-                                                                  instanceof Date ? new
+                                                                  export default (scope) => { const member
+                                                                  = (m: unknown): string => typeof m ===
+                                                                  'string' ? m : typeof m === 'number' ?
+                                                                  m.toLocaleString() : typeof m ===
+                                                                  'boolean' ? String(m) : m instanceof
+                                                                  Date ? new
                                                                   Intl.DateTimeFormat(undefined, {
-                                                                  dateStyle: 'medium' }).format(v) :
-                                                                  String(v) }
+                                                                  dateStyle: 'medium' }).format(m) : '';
+                                                                  const v: unknown =
+                                                                  scope.trajet?.reserveLe; return typeof v
+                                                                  === 'boolean' ? (v ? '✓' : '') :
+                                                                  Array.isArray(v) ?
+                                                                  v.map(member).filter((t) => t !==
+                                                                  '').join(', ') : member(v) }
                                                         - name: titreNotes
                                                           instanceOf: Platform:component.ComponentInstance
                                                           component: PlatformComponents:infos.Text
@@ -2254,16 +2272,20 @@ elements:
                                                                 name: expression
                                                                 instanceOf: Platform:Expression
                                                                 compute: >
-                                                                  export default (scope) => { const v:
-                                                                  unknown = scope.trajet?.options; return
-                                                                  v === undefined || v === null ? '' :
-                                                                  typeof v === 'number' ?
-                                                                  v.toLocaleString() : typeof v ===
-                                                                  'boolean' ? (v ? '✓' : '') : v
-                                                                  instanceof Date ? new
+                                                                  export default (scope) => { const member
+                                                                  = (m: unknown): string => typeof m ===
+                                                                  'string' ? m : typeof m === 'number' ?
+                                                                  m.toLocaleString() : typeof m ===
+                                                                  'boolean' ? String(m) : m instanceof
+                                                                  Date ? new
                                                                   Intl.DateTimeFormat(undefined, {
-                                                                  dateStyle: 'medium' }).format(v) :
-                                                                  String(v) }
+                                                                  dateStyle: 'medium' }).format(m) : '';
+                                                                  const v: unknown =
+                                                                  scope.trajet?.options; return typeof v
+                                                                  === 'boolean' ? (v ? '✓' : '') :
+                                                                  Array.isArray(v) ?
+                                                                  v.map(member).filter((t) => t !==
+                                                                  '').join(', ') : member(v) }
                                             - name: else
                                               instanceOf: Platform:component.ZoneValue
                                               property: PlatformComponents:logic.If.else
@@ -3266,52 +3288,73 @@ elements:
                       const siChoisiCondition = ((scope) => !!scope.trajet)
                       satisfies (scope: TrajetScreenScope) => unknown
 
-                      const placesText = ((scope) => { const v: unknown =
-                      scope.trajet?.places; return v === undefined || v === null
-                      ? '' : typeof v === 'number' ? v.toLocaleString() : typeof
-                      v === 'boolean' ? (v ? '✓' : '') : v instanceof Date ? new
+                      const placesText = ((scope) => { const member = (m:
+                      unknown): string => typeof m === 'string' ? m : typeof m
+                      === 'number' ? m.toLocaleString() : typeof m === 'boolean'
+                      ? String(m) : m instanceof Date ? new
                       Intl.DateTimeFormat(undefined, { dateStyle: 'medium'
-                      }).format(v) : String(v) }) satisfies (scope:
+                      }).format(m) : ''; const v: unknown =
+                      scope.trajet?.places; return typeof v === 'boolean' ? (v ?
+                      '✓' : '') : Array.isArray(v) ? v.map(member).filter((t) =>
+                      t !== '').join(', ') : member(v) }) satisfies (scope:
                       TrajetScreenScope) => unknown
 
-                      const prixText = ((scope) => { const v: unknown =
-                      scope.trajet?.prix; return v === undefined || v === null ?
-                      '' : typeof v === 'number' ? v.toLocaleString() : typeof v
-                      === 'boolean' ? (v ? '✓' : '') : v instanceof Date ? new
+                      const prixText = ((scope) => { const member = (m:
+                      unknown): string => typeof m === 'string' ? m : typeof m
+                      === 'number' ? m.toLocaleString() : typeof m === 'boolean'
+                      ? String(m) : m instanceof Date ? new
                       Intl.DateTimeFormat(undefined, { dateStyle: 'medium'
-                      }).format(v) : String(v) }) satisfies (scope:
+                      }).format(m) : ''; const v: unknown = scope.trajet?.prix;
+                      return typeof v === 'boolean' ? (v ? '✓' : '') :
+                      Array.isArray(v) ? v.map(member).filter((t) => t !==
+                      '').join(', ') : member(v) }) satisfies (scope:
                       TrajetScreenScope) => unknown
 
-                      const dateDepartText = ((scope) => { const v: unknown =
-                      scope.trajet?.dateDepart; return v === undefined || v ===
-                      null ? '' : typeof v === 'number' ? v.toLocaleString() :
-                      typeof v === 'boolean' ? (v ? '✓' : '') : v instanceof
-                      Date ? new Intl.DateTimeFormat(undefined, { dateStyle:
-                      'medium' }).format(v) : String(v) }) satisfies (scope:
-                      TrajetScreenScope) => unknown
+                      const dateDepartText = ((scope) => { const member = (m:
+                      unknown): string => typeof m === 'string' ? m : typeof m
+                      === 'number' ? m.toLocaleString() : typeof m === 'boolean'
+                      ? String(m) : m instanceof Date ? new
+                      Intl.DateTimeFormat(undefined, { dateStyle: 'medium'
+                      }).format(m) : ''; const v: unknown =
+                      scope.trajet?.dateDepart; return typeof v === 'boolean' ?
+                      (v ? '✓' : '') : Array.isArray(v) ?
+                      v.map(member).filter((t) => t !== '').join(', ') :
+                      member(v) }) satisfies (scope: TrajetScreenScope) =>
+                      unknown
 
-                      const heureDepartText = ((scope) => { const v: unknown =
-                      scope.trajet?.heureDepart; return v === undefined || v ===
-                      null ? '' : typeof v === 'number' ? v.toLocaleString() :
-                      typeof v === 'boolean' ? (v ? '✓' : '') : v instanceof
-                      Date ? new Intl.DateTimeFormat(undefined, { dateStyle:
-                      'medium' }).format(v) : String(v) }) satisfies (scope:
-                      TrajetScreenScope) => unknown
+                      const heureDepartText = ((scope) => { const member = (m:
+                      unknown): string => typeof m === 'string' ? m : typeof m
+                      === 'number' ? m.toLocaleString() : typeof m === 'boolean'
+                      ? String(m) : m instanceof Date ? new
+                      Intl.DateTimeFormat(undefined, { dateStyle: 'medium'
+                      }).format(m) : ''; const v: unknown =
+                      scope.trajet?.heureDepart; return typeof v === 'boolean' ?
+                      (v ? '✓' : '') : Array.isArray(v) ?
+                      v.map(member).filter((t) => t !== '').join(', ') :
+                      member(v) }) satisfies (scope: TrajetScreenScope) =>
+                      unknown
 
-                      const reserveLeText = ((scope) => { const v: unknown =
-                      scope.trajet?.reserveLe; return v === undefined || v ===
-                      null ? '' : typeof v === 'number' ? v.toLocaleString() :
-                      typeof v === 'boolean' ? (v ? '✓' : '') : v instanceof
-                      Date ? new Intl.DateTimeFormat(undefined, { dateStyle:
-                      'medium' }).format(v) : String(v) }) satisfies (scope:
-                      TrajetScreenScope) => unknown
+                      const reserveLeText = ((scope) => { const member = (m:
+                      unknown): string => typeof m === 'string' ? m : typeof m
+                      === 'number' ? m.toLocaleString() : typeof m === 'boolean'
+                      ? String(m) : m instanceof Date ? new
+                      Intl.DateTimeFormat(undefined, { dateStyle: 'medium'
+                      }).format(m) : ''; const v: unknown =
+                      scope.trajet?.reserveLe; return typeof v === 'boolean' ?
+                      (v ? '✓' : '') : Array.isArray(v) ?
+                      v.map(member).filter((t) => t !== '').join(', ') :
+                      member(v) }) satisfies (scope: TrajetScreenScope) =>
+                      unknown
 
-                      const optionsText = ((scope) => { const v: unknown =
-                      scope.trajet?.options; return v === undefined || v ===
-                      null ? '' : typeof v === 'number' ? v.toLocaleString() :
-                      typeof v === 'boolean' ? (v ? '✓' : '') : v instanceof
-                      Date ? new Intl.DateTimeFormat(undefined, { dateStyle:
-                      'medium' }).format(v) : String(v) }) satisfies (scope:
+                      const optionsText = ((scope) => { const member = (m:
+                      unknown): string => typeof m === 'string' ? m : typeof m
+                      === 'number' ? m.toLocaleString() : typeof m === 'boolean'
+                      ? String(m) : m instanceof Date ? new
+                      Intl.DateTimeFormat(undefined, { dateStyle: 'medium'
+                      }).format(m) : ''; const v: unknown =
+                      scope.trajet?.options; return typeof v === 'boolean' ? (v
+                      ? '✓' : '') : Array.isArray(v) ? v.map(member).filter((t)
+                      => t !== '').join(', ') : member(v) }) satisfies (scope:
                       TrajetScreenScope) => unknown
 
                       const siSupprimeCondition = ((scope) => !!scope.selected)

@@ -26,7 +26,7 @@ const ligneDeCommandesValue = ((scope, docs) => docs) satisfies (scope: LigneDeC
 const ligneDeCommandeValue = ((scope, docs) => docs.find((d) => d._id === scope.selected?._id)) satisfies (scope: LigneDeCommandeScreenScope, docs: LigneDeCommande[]) => unknown
 const siCoupeeCondition = ((scope) => (scope.ligneDeCommandes ?? []).length >= 100) satisfies (scope: LigneDeCommandeScreenScope) => unknown
 const siChoisiCondition = ((scope) => !!scope.ligneDeCommande) satisfies (scope: LigneDeCommandeScreenScope) => unknown
-const quantiteText = ((scope) => { const v: unknown = scope.ligneDeCommande?.quantite; return v === undefined || v === null ? '' : typeof v === 'number' ? v.toLocaleString() : typeof v === 'boolean' ? (v ? '✓' : '') : v instanceof Date ? new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(v) : String(v) }) satisfies (scope: LigneDeCommandeScreenScope) => unknown
+const quantiteText = ((scope) => { const member = (m: unknown): string => typeof m === 'string' ? m : typeof m === 'number' ? m.toLocaleString() : typeof m === 'boolean' ? String(m) : m instanceof Date ? new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(m) : ''; const v: unknown = scope.ligneDeCommande?.quantite; return typeof v === 'boolean' ? (v ? '✓' : '') : Array.isArray(v) ? v.map(member).filter((t) => t !== '').join(', ') : member(v) }) satisfies (scope: LigneDeCommandeScreenScope) => unknown
 const siSupprimeCondition = ((scope) => !!scope.selected) satisfies (scope: LigneDeCommandeScreenScope) => unknown
 const siModifiableCondition = ((scope) => !!scope.ligneDeCommande) satisfies (scope: LigneDeCommandeScreenScope) => unknown
 

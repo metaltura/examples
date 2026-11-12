@@ -26,10 +26,10 @@ const livrePublication = { name: 'LivrePublication', schema: Livre, lenient: tru
 const livresValue = ((scope, docs) => docs) satisfies (scope: LivreScreenScope, docs: Livre[]) => unknown
 const auteursValue = ((scope, docs) => docs) satisfies (scope: LivreScreenScope, docs: Auteur[]) => unknown
 const livreValue = ((scope, docs) => docs.find((d) => d._id === scope.selected?._id)) satisfies (scope: LivreScreenScope, docs: Livre[]) => unknown
-const livresDocuments = ((scope) => (scope.livres ?? []).map((d) => ({ ...d, auteurLabel: ((d as unknown as { auteurId?: string } | undefined)?.auteurId ? (scope.auteurs ?? []).find((x) => x._id === (d as unknown as { auteurId?: string } | undefined)?.auteurId)?.nom ?? 'Document supprimé' : '') }))) satisfies (scope: LivreScreenScope) => unknown
+const livresDocuments = ((scope) => (scope.livres ?? []).map((d) => ({ ...d, auteurLabel: ((d as unknown as { auteurId?: string } | undefined)?.auteurId ? ((linked) => (linked ? linked.nom ?? '' : 'Document supprimé'))((scope.auteurs ?? []).find((x) => x._id === (d as unknown as { auteurId?: string } | undefined)?.auteurId)) : '') }))) satisfies (scope: LivreScreenScope) => unknown
 const siCoupeeCondition = ((scope) => (scope.livres ?? []).length >= 100) satisfies (scope: LivreScreenScope) => unknown
 const siChoisiCondition = ((scope) => !!scope.livre) satisfies (scope: LivreScreenScope) => unknown
-const auteurText = ((scope) => ((scope.livre as unknown as { auteurId?: string } | undefined)?.auteurId ? (scope.auteurs ?? []).find((x) => x._id === (scope.livre as unknown as { auteurId?: string } | undefined)?.auteurId)?.nom ?? 'Document supprimé' : '')) satisfies (scope: LivreScreenScope) => unknown
+const auteurText = ((scope) => ((scope.livre as unknown as { auteurId?: string } | undefined)?.auteurId ? ((linked) => (linked ? linked.nom ?? '' : 'Document supprimé'))((scope.auteurs ?? []).find((x) => x._id === (scope.livre as unknown as { auteurId?: string } | undefined)?.auteurId)) : '')) satisfies (scope: LivreScreenScope) => unknown
 const siSupprimeCondition = ((scope) => !!scope.selected) satisfies (scope: LivreScreenScope) => unknown
 const siModifiableCondition = ((scope) => !!scope.livre) satisfies (scope: LivreScreenScope) => unknown
 

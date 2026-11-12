@@ -4163,11 +4163,12 @@ elements:
                                                   export default (scope) => (scope.livres
                                                   ?? []).map((d) => ({ ...d, auteurLabel:
                                                   ((d as unknown as { auteurId?: string }
-                                                  | undefined)?.auteurId ? (scope.auteurs
-                                                  ?? []).find((x) => x._id === (d as
-                                                  unknown as { auteurId?: string } |
-                                                  undefined)?.auteurId)?.nom ?? 'Document
-                                                  supprimé' : '') }))
+                                                  | undefined)?.auteurId ? ((linked) =>
+                                                  (linked ? linked.nom ?? '' : 'Document
+                                                  supprimé'))((scope.auteurs ??
+                                                  []).find((x) => x._id === (d as unknown
+                                                  as { auteurId?: string } |
+                                                  undefined)?.auteurId)) : '') }))
                                             - name: selected
                                               instanceOf: Platform:component.DocumentsValue
                                               property: >-
@@ -4326,11 +4327,12 @@ elements:
                                                                 compute: >
                                                                   export default (scope) => ((scope.livre
                                                                   as unknown as { auteurId?: string } |
-                                                                  undefined)?.auteurId ? (scope.auteurs ??
+                                                                  undefined)?.auteurId ? ((linked) =>
+                                                                  (linked ? linked.nom ?? '' : 'Document
+                                                                  supprimé'))((scope.auteurs ??
                                                                   []).find((x) => x._id === (scope.livre
                                                                   as unknown as { auteurId?: string } |
-                                                                  undefined)?.auteurId)?.nom ?? 'Document
-                                                                  supprimé' : '')
+                                                                  undefined)?.auteurId)) : '')
                                             - name: else
                                               instanceOf: Platform:component.ZoneValue
                                               property: PlatformComponents:logic.If.else
@@ -6184,10 +6186,11 @@ elements:
 
                       const livresDocuments = ((scope) => (scope.livres ??
                       []).map((d) => ({ ...d, auteurLabel: ((d as unknown as {
-                      auteurId?: string } | undefined)?.auteurId ?
-                      (scope.auteurs ?? []).find((x) => x._id === (d as unknown
-                      as { auteurId?: string } | undefined)?.auteurId)?.nom ??
-                      'Document supprimé' : '') }))) satisfies (scope:
+                      auteurId?: string } | undefined)?.auteurId ? ((linked) =>
+                      (linked ? linked.nom ?? '' : 'Document
+                      supprimé'))((scope.auteurs ?? []).find((x) => x._id === (d
+                      as unknown as { auteurId?: string } |
+                      undefined)?.auteurId)) : '') }))) satisfies (scope:
                       LivreScreenScope) => unknown
 
                       const siCoupeeCondition = ((scope) => (scope.livres ??
@@ -6198,11 +6201,12 @@ elements:
                       satisfies (scope: LivreScreenScope) => unknown
 
                       const auteurText = ((scope) => ((scope.livre as unknown as
-                      { auteurId?: string } | undefined)?.auteurId ?
-                      (scope.auteurs ?? []).find((x) => x._id === (scope.livre
-                      as unknown as { auteurId?: string } |
-                      undefined)?.auteurId)?.nom ?? 'Document supprimé' : ''))
-                      satisfies (scope: LivreScreenScope) => unknown
+                      { auteurId?: string } | undefined)?.auteurId ? ((linked)
+                      => (linked ? linked.nom ?? '' : 'Document
+                      supprimé'))((scope.auteurs ?? []).find((x) => x._id ===
+                      (scope.livre as unknown as { auteurId?: string } |
+                      undefined)?.auteurId)) : '')) satisfies (scope:
+                      LivreScreenScope) => unknown
 
                       const siSupprimeCondition = ((scope) => !!scope.selected)
                       satisfies (scope: LivreScreenScope) => unknown
