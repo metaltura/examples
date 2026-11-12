@@ -5,32 +5,32 @@ elements:
     instanceOf: Core:Package
     elements:
       - name: Document
-        instanceOf: Domain:Entity
+        instanceOf: Domain:entities.Entity
         fields:
           - name: numero
-            instanceOf: Domain:Field
+            instanceOf: Domain:entities.Field
             mandatory: true
             type: Core:String
       - name: Client
-        instanceOf: Domain:Entity
+        instanceOf: Domain:entities.Entity
         fields:
           - name: nom
-            instanceOf: Domain:Field
+            instanceOf: Domain:entities.Field
             mandatory: true
             type: Core:String
           - name: courriels
-            instanceOf: Domain:Field
+            instanceOf: Domain:entities.Field
             multiple: true
             type: Core:String
         relations:
           - name: commandes
-            instanceOf: Domain:EntityRelation
+            instanceOf: Domain:entities.EntityRelation
             multiple: true
             type: BoutiqueDomain:entities.Commande
             opposite: BoutiqueDomain:entities.Commande.client
         invariants:
           - name: nomRempli
-            instanceOf: Domain:Invariant
+            instanceOf: Domain:entities.Invariant
             message: Le nom du client est obligatoire.
             check: |
               export default function(entity: any): boolean {
@@ -38,15 +38,15 @@ elements:
               }
         lifecycle:
           name: vie
-          instanceOf: Domain:Lifecycle
+          instanceOf: Domain:lifecycles.Lifecycle
           states:
             - name: actif
-              instanceOf: Domain:State
+              instanceOf: Domain:lifecycles.State
             - name: ferme
-              instanceOf: Domain:State
+              instanceOf: Domain:lifecycles.State
           transitions:
             - name: fermer
-              instanceOf: Domain:Transition
+              instanceOf: Domain:lifecycles.Transition
               source: BoutiqueDomain:entities.Client.vie.actif
               target: BoutiqueDomain:entities.Client.vie.ferme
               guard: |
@@ -55,41 +55,41 @@ elements:
                 }
           initialState: BoutiqueDomain:entities.Client.vie.actif
       - name: Commande
-        instanceOf: Domain:Entity
+        instanceOf: Domain:entities.Entity
         extends: BoutiqueDomain:entities.Document
         fields:
           - name: total
-            instanceOf: Domain:Field
+            instanceOf: Domain:entities.Field
             type: Core:Number
           - name: date
-            instanceOf: Domain:Field
+            instanceOf: Domain:entities.Field
             mandatory: true
             type: Core:Date
         relations:
           - name: client
-            instanceOf: Domain:EntityRelation
+            instanceOf: Domain:entities.EntityRelation
             mandatory: true
             type: BoutiqueDomain:entities.Client
           - name: lignes
-            instanceOf: Domain:EntityRelation
+            instanceOf: Domain:entities.EntityRelation
             multiple: true
             type: BoutiqueDomain:entities.LigneDeCommande
             composite: true
       - name: LigneDeCommande
-        instanceOf: Domain:Entity
+        instanceOf: Domain:entities.Entity
         fields:
           - name: quantite
-            instanceOf: Domain:Field
+            instanceOf: Domain:entities.Field
             mandatory: true
             type: Core:Number
   - name: services
     instanceOf: Core:Package
     elements:
       - name: Facturation
-        instanceOf: Domain:Service
+        instanceOf: Domain:services.Service
         operations:
           - name: calculerTotal
-            instanceOf: Domain:Operation
+            instanceOf: Domain:services.Operation
             input:
               - name: commande
                 instanceOf: Core:InputFeature
@@ -108,18 +108,18 @@ elements:
     instanceOf: Core:Package
     elements:
       - name: Commander
-        instanceOf: Domain:Process
+        instanceOf: Domain:processes.Process
         steps:
           - name: verifier
-            instanceOf: Domain:Step
+            instanceOf: Domain:processes.Step
             service: BoutiqueDomain:services.Facturation
             operation: BoutiqueDomain:services.Facturation.calculerTotal
             branches:
               - name: suite
-                instanceOf: Domain:Branch
+                instanceOf: Domain:processes.Branch
                 target: BoutiqueDomain:processes.Commander.facturer
           - name: facturer
-            instanceOf: Domain:Step
+            instanceOf: Domain:processes.Step
             service: BoutiqueDomain:services.Facturation
             operation: BoutiqueDomain:services.Facturation.calculerTotal
         startStep: BoutiqueDomain:processes.Commander.verifier
