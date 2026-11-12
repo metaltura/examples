@@ -4287,5 +4287,5 @@ depends:
   - Platform
   - FileSystem
   - PlatformComponents
-  - metaltura/platform/EntitiesToPlatform@PLAT-1046-ecrans
-  - metaltura/platform/PlatformToCode@PLAT-1046-ecrans
+  - metaltura/platform/EntitiesToPlatform@v2.0.0
+  - metaltura/platform/PlatformToCode@v2.0.0

@@ -58,19 +58,19 @@ C'est le nom de l'ancien dépôt de ces modèles. Les projets produits n'ont pas
 
 ## Ce dont il dépend
 
-Des neuf autres dépôts de la librairie, chacun à `v1.0.0`, sauf `metaltura/platform`, nommé par sa branche `PLAT-1046-ecrans` jusqu'à sa version `v2.0.0` :
+Des neuf autres dépôts de la librairie, chacun à `v2.0.0` :
 
 | Dépôt | Ce que les exemples en emploient | Ligne `depends` |
 | --- | --- | --- |
-| `metaltura/domain` | `Domain`, que `BoutiqueDomain` instancie | `metaltura/domain/Domain@v1.0.0` |
-| `metaltura/application` | `Application` et `DomainToApplication` | `metaltura/application/Application@v1.0.0`<br>`metaltura/application/DomainToApplication@v1.0.0` |
-| `metaltura/node` | `Node` | `metaltura/node/Node@v1.0.0` |
-| `metaltura/react` | `React` | `metaltura/react/React@v1.0.0` |
-| `metaltura/spring` | `Spring` | `metaltura/spring/Spring@v1.0.0` |
-| `metaltura/angular` | `Angular` | `metaltura/angular/Angular@v1.0.0` |
-| `metaltura/node-react` | `DomainToNodeReact` et `NodeReactToCode` | `metaltura/node-react/DomainToNodeReact@v1.0.0`<br>`metaltura/node-react/NodeReactToCode@v1.0.0` |
-| `metaltura/spring-angular` | `DomainToSpringAngular` et `SpringAngularToCode` | `metaltura/spring-angular/DomainToSpringAngular@v1.0.0`<br>`metaltura/spring-angular/SpringAngularToCode@v1.0.0` |
-| `metaltura/platform` | `DomainToPlatform`, `EntitiesToPlatform` et `PlatformToCode` | `metaltura/platform/DomainToPlatform@PLAT-1046-ecrans`<br>`metaltura/platform/EntitiesToPlatform@PLAT-1046-ecrans`<br>`metaltura/platform/PlatformToCode@PLAT-1046-ecrans` |
+| `metaltura/domain` | `Domain`, que `BoutiqueDomain` instancie | `metaltura/domain/Domain@v2.0.0` |
+| `metaltura/application` | `Application` et `DomainToApplication` | `metaltura/application/Application@v2.0.0`<br>`metaltura/application/DomainToApplication@v2.0.0` |
+| `metaltura/node` | `Node` | `metaltura/node/Node@v2.0.0` |
+| `metaltura/react` | `React` | `metaltura/react/React@v2.0.0` |
+| `metaltura/spring` | `Spring` | `metaltura/spring/Spring@v2.0.0` |
+| `metaltura/angular` | `Angular` | `metaltura/angular/Angular@v2.0.0` |
+| `metaltura/node-react` | `DomainToNodeReact` et `NodeReactToCode` | `metaltura/node-react/DomainToNodeReact@v2.0.0`<br>`metaltura/node-react/NodeReactToCode@v2.0.0` |
+| `metaltura/spring-angular` | `DomainToSpringAngular` et `SpringAngularToCode` | `metaltura/spring-angular/DomainToSpringAngular@v2.0.0`<br>`metaltura/spring-angular/SpringAngularToCode@v2.0.0` |
+| `metaltura/platform` | `DomainToPlatform`, `EntitiesToPlatform` et `PlatformToCode` | `metaltura/platform/DomainToPlatform@v2.0.0`<br>`metaltura/platform/EntitiesToPlatform@v2.0.0`<br>`metaltura/platform/PlatformToCode@v2.0.0` |
 
 Chaque modèle d'exemple écrit ces lignes à la fin de son fichier, pour les seuls modèles qu'il emploie. Par exemple `BoutiqueNodeReact` :
 
@@ -79,12 +79,12 @@ depends:
   - Mapping
   - BoutiqueDomain
   - FileSystem
-  - metaltura/application/Application@v1.0.0
-  - metaltura/node/Node@v1.0.0
-  - metaltura/react/React@v1.0.0
-  - metaltura/application/DomainToApplication@v1.0.0
-  - metaltura/node-react/DomainToNodeReact@v1.0.0
-  - metaltura/node-react/NodeReactToCode@v1.0.0
+  - metaltura/application/Application@v2.0.0
+  - metaltura/node/Node@v2.0.0
+  - metaltura/react/React@v2.0.0
+  - metaltura/application/DomainToApplication@v2.0.0
+  - metaltura/node-react/DomainToNodeReact@v2.0.0
+  - metaltura/node-react/NodeReactToCode@v2.0.0
 ```
 
 Ces modèles s'écrivent par leur nom seul, en tête :

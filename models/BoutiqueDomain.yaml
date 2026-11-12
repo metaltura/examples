@@ -125,4 +125,4 @@ elements:
         startStep: BoutiqueDomain:processes.Commander.verifier
 version: latest
 depends:
-  - metaltura/domain/Domain@v1.0.0
+  - metaltura/domain/Domain@v2.0.0

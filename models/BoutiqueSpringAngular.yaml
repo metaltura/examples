@@ -7634,9 +7634,9 @@ depends:
   - Mapping
   - BoutiqueDomain
   - FileSystem
-  - metaltura/application/Application@v1.0.0
-  - metaltura/spring/Spring@v1.0.0
-  - metaltura/angular/Angular@v1.0.0
-  - metaltura/application/DomainToApplication@v1.0.0
-  - metaltura/spring-angular/DomainToSpringAngular@v1.0.0
-  - metaltura/spring-angular/SpringAngularToCode@v1.0.0
+  - metaltura/application/Application@v2.0.0
+  - metaltura/spring/Spring@v2.0.0
+  - metaltura/angular/Angular@v2.0.0
+  - metaltura/application/DomainToApplication@v2.0.0
+  - metaltura/spring-angular/DomainToSpringAngular@v2.0.0
+  - metaltura/spring-angular/SpringAngularToCode@v2.0.0

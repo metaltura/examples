@@ -10328,6 +10328,6 @@ depends:
   - Platform
   - FileSystem
   - PlatformComponents
-  - metaltura/application/DomainToApplication@v1.0.0
-  - metaltura/platform/DomainToPlatform@PLAT-1046-ecrans
-  - metaltura/platform/PlatformToCode@PLAT-1046-ecrans
+  - metaltura/application/DomainToApplication@v2.0.0
+  - metaltura/platform/DomainToPlatform@v2.0.0
+  - metaltura/platform/PlatformToCode@v2.0.0
