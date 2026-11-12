@@ -10,11 +10,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@kogitec/core": "^1.9.0",
-    "@kogitec/schema": "^1.7.1",
-    "@kogitec/security": "^1.5.3",
-    "@kogitec/socket": "^1.4.3",
-    "@kogitec/workbench": "^0.1.5",
+    "@kogitec/core": "^2.0.0",
+    "@kogitec/schema": "^1.8.0",
+    "@kogitec/security": "^1.5.4",
+    "@kogitec/socket": "^1.4.4",
+    "@kogitec/workbench": "^0.1.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tsx": "^4.22.4"

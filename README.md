@@ -34,7 +34,7 @@ On branche une pile sur un domaine dans un modèle d'exemple de cette forme :
 1. Un paquet `application` avec un Mapping : le patron de tête de la pile comme mapper, le modèle de domaine comme source, le paquet lui-même comme cible.
 2. Un paquet `code` avec un dossier système (`FileSystem:SystemFolder`, son `rootPath` nomme le dossier sous `code/`) et un Mapping : le patron de tête de génération comme mapper, le serveur, le contexte ou le paquet `application` comme source, le dossier système comme cible.
 
-Un modèle d'entités déjà dessinées se branche de même sur `entitiesToPlatform` : le modèle ou le package d'entités comme source, et un modèle d'exemple qui dépend de lui et de `Compositions` (`metaltura/platform/Compositions@v1.0.0`).
+Un modèle d'entités déjà dessinées se branche de même sur `entitiesToPlatform` : le modèle ou le package d'entités comme source, et un modèle d'exemple qui dépend de lui et de `PlatformComponents`, le catalogue des composantes que ses écrans posent.
 
 Chaque modification de l'espace de travail rejoue les patrons et réécrit les fichiers qui changent. Une retouche faite à la main sur un élément ou un fichier produit est conservée.
 
@@ -58,7 +58,7 @@ C'est le nom de l'ancien dépôt de ces modèles. Les projets produits n'ont pas
 
 ## Ce dont il dépend
 
-Des neuf autres dépôts de la librairie, chacun à `v1.0.0` :
+Des neuf autres dépôts de la librairie, chacun à `v1.0.0`, sauf `metaltura/platform`, nommé par sa branche `PLAT-1046-ecrans` jusqu'à sa version `v2.0.0` :
 
 | Dépôt | Ce que les exemples en emploient | Ligne `depends` |
 | --- | --- | --- |
@@ -70,7 +70,7 @@ Des neuf autres dépôts de la librairie, chacun à `v1.0.0` :
 | `metaltura/angular` | `Angular` | `metaltura/angular/Angular@v1.0.0` |
 | `metaltura/node-react` | `DomainToNodeReact` et `NodeReactToCode` | `metaltura/node-react/DomainToNodeReact@v1.0.0`<br>`metaltura/node-react/NodeReactToCode@v1.0.0` |
 | `metaltura/spring-angular` | `DomainToSpringAngular` et `SpringAngularToCode` | `metaltura/spring-angular/DomainToSpringAngular@v1.0.0`<br>`metaltura/spring-angular/SpringAngularToCode@v1.0.0` |
-| `metaltura/platform` | `DomainToPlatform`, `EntitiesToPlatform`, `Compositions` et `PlatformToCode` | `metaltura/platform/DomainToPlatform@v1.0.0`<br>`metaltura/platform/EntitiesToPlatform@v1.0.0`<br>`metaltura/platform/Compositions@v1.0.0`<br>`metaltura/platform/PlatformToCode@v1.0.0` |
+| `metaltura/platform` | `DomainToPlatform`, `EntitiesToPlatform` et `PlatformToCode` | `metaltura/platform/DomainToPlatform@PLAT-1046-ecrans`<br>`metaltura/platform/EntitiesToPlatform@PLAT-1046-ecrans`<br>`metaltura/platform/PlatformToCode@PLAT-1046-ecrans` |
 
 Chaque modèle d'exemple écrit ces lignes à la fin de son fichier, pour les seuls modèles qu'il emploie. Par exemple `BoutiqueNodeReact` :
 
@@ -152,7 +152,7 @@ npm install    # les paquets de la plateforme
 npm start      # construit l'interface, puis le serveur sert l'application sur http://localhost:8081
 ```
 
-Le menu latéral montre la catégorie « Boutique » et ses quatre boutons. L'écran de chaque entité montre sa liste à gauche et son formulaire à droite. Sans fournisseur de connexion, l'application s'ouvre sous l'identité « Développeur local ». `MONGO_URL` change la base (par défaut `mongodb://localhost:27017/kogitec`), `PORT` le port. Sans jeton, `npm install` échoue sur le premier paquet `@kogitec/*` (« npm error code E401 ») : le README du projet dit pourquoi. `npm run typecheck` vérifie les types. Le `package-lock.json`, `node_modules` et `dist` que ces commandes créent ne se commitent pas.
+Le menu latéral montre la catégorie « Boutique » et ses quatre boutons. L'écran de chaque entité montre sa liste à gauche, sa fiche et son formulaire à droite. Sans fournisseur de connexion, l'application s'ouvre sous l'identité « Développeur local ». `MONGO_URL` change la base (par défaut `mongodb://localhost:27017/kogitec`), `PORT` le port. Sans jeton, `npm install` échoue sur le premier paquet `@kogitec/*` (« npm error code E401 ») : le README du projet dit pourquoi. `npm run typecheck` vérifie les types. Le `package-lock.json`, `node_modules` et `dist` que ces commandes créent ne se commitent pas.
 
 Le même projet se construit en image Docker, le jeton passé à la construction comme secret : il ne reste dans aucune couche de l'image. L'image ouvre la connexion obligatoire par défaut ; `REQUIRE_AUTH=false` l'essaie sous l'identité « Développeur local » :
 
@@ -162,16 +162,18 @@ NODE_AUTH_TOKEN=<le jeton> docker build --secret id=node_auth_token,env=NODE_AUT
 docker run --rm -e REQUIRE_AUTH=false -p 8081:8081 boutique   # http://localhost:8081
 ```
 
-Le projet compte beaucoup moins de lignes que celui de la pile Node + React, comptées de la même façon sur tous leurs fichiers, sans `node_modules`, `dist` ni `package-lock.json` :
+Le projet se compare à celui de la pile Node + React par ses lignes, comptées de la même façon sur tous leurs fichiers, sans `node_modules`, `dist` ni `package-lock.json` :
 
 ```bash
 find <dossier> -type f -not -path '*/node_modules/*' -not -path '*/dist/*' -not -name package-lock.json | xargs cat | wc -l
 ```
 
-| Projet | Lignes au 2026-10-31 |
-| --- | --- |
-| `code/boutique` (Node + React) | 2 429 |
-| `code/boutique-platform` (la plateforme) | 375 |
+| Projet | Lignes au 2026-10-31 | Lignes au 2026-11-11 |
+| --- | --- | --- |
+| `code/boutique` (Node + React) | 2 429 | 2 429 |
+| `code/boutique-platform` (la plateforme) | 375 | 2 138 |
+
+Depuis le 11 novembre (PLAT-1046), chaque écran d'entité est écrit en entier, une composante par composition, et `src/common/i18n.ts` porte leurs textes en français et en anglais : il fait à lui seul 882 lignes.
 
 ### Lancer l'application plateforme de la bibliothèque sur un poste
 
